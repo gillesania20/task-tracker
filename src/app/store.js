@@ -1,12 +1,11 @@
+import { api } from './../features/api/apiSlice';
 const reducer = {
-    users: usersReducer
+    [api.reducerPath]: api.reducer
 };
 const preloadedState = {
-    users: [
-        {
-            username: 'userone'
-        }
-    ]
+    users: [],
+    tasks: [],
+    token: ''
 };
 const store = configureStore({
     reducer,
@@ -14,3 +13,4 @@ const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
     preloadedState
 });
+export default store;
