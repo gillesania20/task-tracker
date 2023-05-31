@@ -1,6 +1,12 @@
+import { useLoginMutation } from './../../features/auth/authApiSlice';
 const Login = () => {
+    const [login] = useLoginMutation();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        login({username: 'admin', password: '1!abcdef'});
+    }
     return (
-        <div id = 'login'>
+        <form id = 'login' onSubmit={handleSubmit}>
             <div>
                 <input type='text' />
             </div>
@@ -8,12 +14,12 @@ const Login = () => {
                 <input type='password' />
             </div>
             <div>
-                <button>Login</button>
+                <button type='submit'>Login</button>
             </div>
             <div>
                 <a href='/'>Register</a>
             </div>
-        </div>
+        </form>
     );
 }
 export default Login;

@@ -10,7 +10,7 @@ const api = createApi({
             const token = getState().token;
             if(
                 typeof token === 'string'
-                || token.length > 0
+                && token.length > 0
             ){
                 headers.set('authorization', `Bearer ${token}`);
             }
