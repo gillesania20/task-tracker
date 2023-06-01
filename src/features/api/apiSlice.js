@@ -15,7 +15,8 @@ const api = createApi({
                 headers.set('authorization', `Bearer ${token}`);
             }
             return headers;
-        }
+        },
+        credentials: 'include'//to manage cookies when using fetch()
     }),
     tagTypes: ['Users', 'Tasks'],
     endpoints: () => ({})

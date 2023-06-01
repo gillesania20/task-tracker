@@ -1,5 +1,7 @@
 import { api } from './../api/apiSlice';
-import { setToken } from './authSlice';
+import {
+    setToken
+} from './authSlice';
 const authApiRoute = 'auth';
 const authApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -21,7 +23,7 @@ const authApi = api.injectEndpoints({
                     const accessToken = data.accessToken;
                     dispatch(setToken({accessToken}));
                 }catch(err){
-                    //err
+                    //error
                 }
             }
         }),
