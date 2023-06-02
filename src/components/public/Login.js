@@ -16,7 +16,7 @@ const Login = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(username.length <= 0 && password.length <= 0){
+        if(username.length <= 0 || password.length <= 0){
             setMessage('Please fill up all text boxes');
         }else{
             response = await login({username, password});
@@ -30,7 +30,7 @@ const Login = () => {
     }
     return (
         <form id = 'login' onSubmit={handleSubmit}>
-            {(message !== '')?<div>{message}</div>:''}
+            {(message.length > 0)?<div>{message}</div>:''}
             <div>
                 <input type='text' name='uname' value={username}
                     onChange={handleOnChange}
