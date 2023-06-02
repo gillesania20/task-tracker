@@ -4,7 +4,7 @@ const Login = () => {
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [login, {error}] = useLoginMutation();
+    const [login] = useLoginMutation();
     let response = null;
     const handleOnChange = (e) => {
         if(e.target.name === 'uname'){
@@ -16,12 +16,17 @@ const Login = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        response = await login({username, password});
-        if(typeof response.error !== 'undefined'){
-            setMessage(response.error.data.message);
-        }else if(typeof response.data !== 'undefined'){
-            setMessage(response.data.message);
+        if(username.length <= 0 && password.length <= 0){
+            setMessage('Please fill up all text boxes');
+        }else{
+            response = await login({username, password});
+            if(typeof response.error !== 'undefined'){
+                setMessage(response.error.data.message);
+            }else if(typeof response.data !== 'undefined'){
+                setMessage(response.data.message);
+            }
         }
+        return null;
     }
     return (
         <form id = 'login' onSubmit={handleSubmit}>
