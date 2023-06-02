@@ -1,17 +1,40 @@
 import { useLoginMutation } from './../../features/auth/authApiSlice';
+import { useState } from 'react';
 const Login = () => {
-    const [login] = useLoginMutation();
-    const handleSubmit = (e) => {
+    const [message, setMessage] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [login, {error}] = useLoginMutation();
+    let response = null;
+    const handleOnChange = (e) => {
+        if(e.target.name === 'uname'){
+            setUsername(e.target.value);
+        }else if(e.target.name === 'pass'){
+            setPassword(e.target.value);
+        }
+        return null;
+    }
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        login({username: 'admin', password: '1!abcdef'});
+        response = await login({username, password});
+        if(typeof response.error !== 'undefined'){
+            setMessage(response.error.data.message);
+        }else if(typeof response.data !== 'undefined'){
+            setMessage(response.data.message);
+        }
     }
     return (
         <form id = 'login' onSubmit={handleSubmit}>
+            {(message !== '')?<div>{message}</div>:''}
             <div>
-                <input type='text' />
+                <input type='text' name='uname' value={username}
+                    onChange={handleOnChange}
+                />
             </div>
             <div>
-                <input type='password' />
+                <input type='password' name='pass' value={password}
+                    onChange={handleOnChange}
+                />
             </div>
             <div>
                 <button type='submit'>Login</button>
