@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import getTokenRole from './../../functions/getTokenRole';
 const initialState = {
-    token: null
+    token: null,
+    role: null
 };
 const authSlice = createSlice({
     name: 'auth',
@@ -12,11 +14,23 @@ const authSlice = createSlice({
         },
         resetToken: (state) => {
             state.token = null;
+        },
+        setRole: (state, action) => {
+            const { accessToken } = action.payload;
+            //getTokenRole will return 'unknown' if error occured
+            state.role = getTokenRole(accessToken);
+        },
+        resetRole: (state) => {
+            state.role = null;
         }
     }
 });
 export const {
     setToken,
-    resetToken
+    resetToken,
+    setRole,
+    resetRole
 } = authSlice.actions;
 export default authSlice;
+export const selectToken = (state) => state.auth.token;
+export const selectRole = (state) => state.auth.role;

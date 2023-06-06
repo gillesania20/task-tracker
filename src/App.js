@@ -36,7 +36,8 @@ function App() {
         },
         {
           path: '/dash/tasks/display-all-tasks',
-          element: <DisplayTasks />
+          element: <DisplayTasks
+            authRoles = {['User', 'Admin']} />
         },
         {
           path: '/dash/tasks/edit-task',
