@@ -3,6 +3,7 @@ import {
   RouterProvider
 } from 'react-router-dom';
 import VerifyUser from './components/auth/VerifyUser';
+import Authorization from './components/auth/Authorization';
 import Layout from './components/layout/Layout';
 import Login from './components/public/Login';
 import Register from './components/public/Register';
@@ -27,36 +28,42 @@ function App() {
       element: <VerifyUser />,
       children: [
         {
-          element: <Layout />,
+          element: <Authorization
+            authorizedRoles = {['User', 'Admin']}
+          />,
           children: [
             {
-              path: '/dash/tasks/add-new',
-              element: <AddNewTask />
-            },
-            {
-              path: '/dash/tasks/display-task',
-              element: <DisplaySingleTask />
-            },
-            {
-              path: '/dash/tasks/display-all-tasks',
-              element: <DisplayTasks
-                authRoles = {['User', 'Adminn']} />
-            },
-            {
-              path: '/dash/tasks/edit-task',
-              element: <EditTask />
-            },
-            {
-              path: '/dash/users/display-user',
-              element: <DisplaySingleUser />
-            },
-            {
-              path: '/dash/users/display-all-users',
-              element: <DisplayUsers />
-            },
-            {
-              path: '/dash/users/edit-user',
-              element: <EditUser />
+              element: <Layout />,
+              children: [
+                {
+                  path: '/dash/tasks/add-new',
+                  element: <AddNewTask />
+                },
+                {
+                  path: '/dash/tasks/display-task',
+                  element: <DisplaySingleTask />
+                },
+                {
+                  path: '/dash/tasks/display-all-tasks',
+                  element: <DisplayTasks />
+                },
+                {
+                  path: '/dash/tasks/edit-task',
+                  element: <EditTask />
+                },
+                {
+                  path: '/dash/users/display-user',
+                  element: <DisplaySingleUser />
+                },
+                {
+                  path: '/dash/users/display-all-users',
+                  element: <DisplayUsers />
+                },
+                {
+                  path: '/dash/users/edit-user',
+                  element: <EditUser />
+                }
+              ]
             }
           ]
         }

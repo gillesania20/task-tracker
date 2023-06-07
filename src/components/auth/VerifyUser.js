@@ -22,7 +22,7 @@ const VerifyUser = () => {
     if(isLoading === true){
         content = <div>IS LOADING...</div>;
     }else if(error !== null){
-        content = <div>ERROR</div>;
+        content = <div>PLEASE LOGIN FIRST</div>;
     }else{
         content = <Outlet />
     }
