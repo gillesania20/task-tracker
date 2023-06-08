@@ -7,12 +7,12 @@ const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_URL,
         prepareHeaders: (headers, { getState }) => {
-            const token = getState().token;
+            const token = getState().auth.token;
             if(
                 typeof token === 'string'
                 && token.length > 0
             ){
-                headers.set('authorization', `Bearer ${token}`);
+                headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         },

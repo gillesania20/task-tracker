@@ -7,11 +7,14 @@ const taskApi = api.injectEndpoints({
                 url: taskApiRoute,
                 method: 'GET'
             }),
+            transformResponse: (response) => (
+                response.tasks
+            ),
             providesTags: (result) => {
                 if(result){
                     return [
-                        ...result.map(({id}) =>
-                            ({type: 'Tasks', id})),
+                        ...result.map(({_id}) =>
+                            ({type: 'Tasks', id:_id})),
                         {type: 'Tasks', id: 'LIST'}
                     ];
                 }else{
