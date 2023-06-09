@@ -1,16 +1,45 @@
+import { useState } from 'react';
+import { useAddTaskMutation } from './../../features/tasks/taskApiSlice';
 const AddNewTask = () => {
+    const [message, setMessage] = useState('');
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [addTask, { isLoading }] = useAddTaskMutation();
+    const onChange = (e) => {
+        if(e.target.name === 'title'){
+            setTitle(e.target.value);
+        }else if(e.target.name === 'body'){
+            setBody(e.target.value);
+        }
+        return null;
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const response = await addTask({title, body});
+        if(typeof response.error !== 'undefined'){
+            setMessage(response.error.data.message);
+        }else if(typeof response.data !== 'undefined'){
+            setMessage(response.data.message)
+        }
+        return null;
+    }
     return (
-        <div id = 'AddNewTask'>
+        <form id = 'AddNewTask' onSubmit={handleSubmit}>
+            {(message.length > 0)?<div>{message}</div>:''}
             <div>
-                <input type='text' placeholder='Title' />
+                <input type='text' placeholder='Title'
+                    name='title' value={title} onChange={onChange}/>
             </div>
             <div>
-                <textarea placehoder='Body'></textarea>
+                <textarea placeholder='Body' name='body'
+                    value={body} onChange={onChange}></textarea>
             </div>
             <div>
-                <button>Add Task</button>
+                {(isLoading !== true)?
+                    <button type='submit'>Add Task</button>
+                    :<div>Loading...</div>}
             </div>
-        </div>
+        </form>
     );
 }
 export default AddNewTask;
