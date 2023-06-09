@@ -7,7 +7,14 @@ const DisplaySingleTask = () => {
     if(isLoading === true){
         content = <div>LOADING...</div>;
     }else if(typeof error !== 'undefined'){
-        content = <div>ERROR</div>
+        if(typeof error?.data?.message !== 'undefined'
+            && typeof error?.data?.task !== 'null'
+            && error.data.message === 'invalid id'
+        ){
+            content = <div>TASK ID NOT FOUND!</div>
+        }else{
+            content = <div>ERROR</div>
+        }
     }else{
         content = <div id = 'DisplaySingleTask'>
             <div>
