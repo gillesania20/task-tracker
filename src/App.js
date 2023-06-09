@@ -40,7 +40,7 @@ function App() {
                   element: <AddNewTask />
                 },
                 {
-                  path: '/dash/tasks/display-task',
+                  path: '/dash/tasks/display-task/:taskId',
                   element: <DisplaySingleTask />
                 },
                 {

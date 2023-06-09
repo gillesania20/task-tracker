@@ -26,7 +26,10 @@ const taskApi = api.injectEndpoints({
             query: ({taskId}) => ({
                 url: `${taskApiRoute}/${taskId}`,
                 method: 'GET'
-            })
+            }),
+            transformResponse: (response) => (
+                response.task
+            )
         }),
         addTask: build.mutation({
             query: ({title, body}) => ({
