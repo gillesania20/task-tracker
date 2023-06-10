@@ -4,11 +4,11 @@ const DisplayTasks = () => {
     let content = <></>;
     if(isLoading === true){
         content = <div>IS LOADING...</div>;
-    }else if(typeof error !== 'undefined'){
-        content = <div>ERROR</div>;
+    }else if(typeof error?.data?.message !== 'undefined'){
+        content = <div>{error.data.message}</div>;
     }else if(data.length <= 0){
         content = <div>No task yet</div>;
-    }else{
+    }else if(data.length > 0){
         content = (
             <div id = 'DisplayTasks'>
                 <div>
@@ -23,6 +23,8 @@ const DisplayTasks = () => {
                 </div>)}
             </div>
         );
+    }else{
+        content = <div>ERROR</div>;
     }
     return content;
 }

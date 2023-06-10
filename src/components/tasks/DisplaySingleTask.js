@@ -6,16 +6,9 @@ const DisplaySingleTask = () => {
     let content = <></>;
     if(isLoading === true){
         content = <div>LOADING...</div>;
-    }else if(typeof error !== 'undefined'){
-        if(typeof error?.data?.message !== 'undefined'
-            && typeof error?.data?.task !== 'null'
-            && error.data.message === 'invalid id'
-        ){
-            content = <div>TASK ID NOT FOUND!</div>
-        }else{
-            content = <div>ERROR</div>
-        }
-    }else{
+    }else if(typeof error?.data?.message !== 'undefined'){
+        content = <div>{error.data.message}</div>;
+    }else if(typeof data !== 'undefined'){
         content = <div id = 'DisplaySingleTask'>
             <div>
                 <span>Title:</span>
@@ -29,19 +22,21 @@ const DisplaySingleTask = () => {
                 <span>Status:</span>
                 <span>{(data.completed)?'Completed':'Not Completed'}</span>
             </div>
-            {/*<div>
-                <span>Created At:</span>
-                <span>01/20/1998</span>
-            </div>
-            <div>
-                <span>Finished At:</span>
-                <span>02/10/1998</span>
-            </div>*/}
+            {
+                (data.completed === true)?
+                <div>
+                    <span>Completed At:</span>
+                    <span>{data.completedAt}</span>
+                </div>
+                :''
+            }
             <div>
                 <span>Author:</span>
                 <span>{data.user.username}</span>
             </div>
         </div>;
+    }else{
+        content = <div>ERROR</div>
     }
     return content;
 }

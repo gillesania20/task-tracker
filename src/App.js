@@ -48,7 +48,7 @@ function App() {
                   element: <DisplayTasks />
                 },
                 {
-                  path: '/dash/tasks/edit-task',
+                  path: '/dash/tasks/edit-task/:taskId',
                   element: <EditTask />
                 },
                 {

@@ -16,10 +16,12 @@ const AddNewTask = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await addTask({title, body});
-        if(typeof response.error !== 'undefined'){
+        if(typeof response.error?.data?.message !== 'undefined'){
             setMessage(response.error.data.message);
-        }else if(typeof response.data !== 'undefined'){
+        }else if(typeof response.data?.message !== 'undefined'){
             setMessage(response.data.message)
+        }else{
+            setMessage('unknown error');
         }
         return null;
     }
@@ -35,9 +37,11 @@ const AddNewTask = () => {
                     value={body} onChange={onChange}></textarea>
             </div>
             <div>
-                {(isLoading !== true)?
-                    <button type='submit'>Add Task</button>
-                    :<div>Loading...</div>}
+                {
+                    (isLoading === true)?
+                    <div>Loading...</div>
+                    :<button type='submit'>Add Task</button>
+                }
             </div>
         </form>
     );
