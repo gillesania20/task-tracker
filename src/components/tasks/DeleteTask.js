@@ -1,19 +1,30 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDeleteTaskMutation } from './../../features/tasks/taskApiSlice';
+import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const DeleteTask = () => {
     const { taskId } = useParams();
     const [message, setMessage] = useState('');
     const [deleteTask, { isLoading }] = useDeleteTaskMutation();
+    const [refresh, { isLoading: isLoadingRefresh }] = useRefreshMutation();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await deleteTask({taskId});
-        if(typeof response.error?.data?.message !== 'undefined'){
-            setMessage(response.error.data.message);
-        }else if(typeof response.data?.message !== 'undefined'){
-            setMessage(response.data.message);
+        const refreshResponse = await refresh();
+        if(refreshResponse.data?.message === 'successful token refresh'){
+            const response = await deleteTask({taskId});
+            if(typeof response.error?.data?.message !== 'undefined'){
+                setMessage(response.error.data.message);
+            }else if(typeof response.data?.message !== 'undefined'){
+                setMessage(response.data.message);
+            }else{
+                setMessage('unknown error');
+            }
         }else{
-            setMessage('unknown error');
+            if(typeof refreshResponse.error?.data?.message !== 'undefined'){
+                setMessage(refreshResponse.error.data.message);
+            }else{
+                setMessage('unknown error');
+            }
         }
         return null;
     }
@@ -26,7 +37,7 @@ const DeleteTask = () => {
             </div>
             <div>
                 {
-                    (isLoading === true)?
+                    (isLoading === true || isLoadingRefresh === true)?
                     <div>Loading...</div>:
                     <button type='submit'>Delete</button>
                 }
