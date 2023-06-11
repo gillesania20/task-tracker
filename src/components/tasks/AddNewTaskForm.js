@@ -23,7 +23,9 @@ const AddNewTaskForm = () => {
             if(typeof response.error?.data?.message !== 'undefined'){
                 setMessage(response.error.data.message);
             }else if(typeof response.data?.message !== 'undefined'){
-                setMessage(response.data.message)
+                setMessage(response.data.message);
+                setTitle('');
+                setBody('');
             }else{
                 setMessage('unknown error');
             }
