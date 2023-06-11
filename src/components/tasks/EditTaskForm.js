@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUpdateTaskMutation } from './../../features/tasks/taskApiSlice';
+import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const EditTaskForm = ({data}) => {
     const { taskId } = useParams();
     const [message, setMessage] = useState('');
@@ -8,6 +9,7 @@ const EditTaskForm = ({data}) => {
     const [body, setBody] = useState(data.body);
     const [completed, setCompleted] = useState(data.completed);
     const [updateTask, { isLoading }] = useUpdateTaskMutation();
+    const [refresh, { isLoading: isLoadingRefresh}] = useRefreshMutation();
     const onChange = (e) => {
         if(e.target.name === 'title'){
             setTitle(e.target.value);
@@ -20,13 +22,22 @@ const EditTaskForm = ({data}) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await updateTask({taskId, title, body, completed});
-        if(typeof response.data?.message !== 'undefined'){
-            setMessage(response.data.message);
-        }else if(typeof response.error?.data?.message !== 'undefined'){
-            setMessage(response.error.data.message);
+        const refreshResponse = await refresh();
+        if(refreshResponse.data?.message === 'successful token refresh'){
+            const response = await updateTask({taskId, title, body, completed});
+            if(typeof response.data?.message !== 'undefined'){
+                setMessage(response.data.message);
+            }else if(typeof response.error?.data?.message !== 'undefined'){
+                setMessage(response.error.data.message);
+            }else{
+                setMessage('unknown error')
+            }
         }else{
-            setMessage('unknown error')
+            if(typeof refreshResponse.error?.data?.message !== 'undefined'){
+                setMessage(refreshResponse.error.data.message);
+            }else{
+                setMessage('unknown error');
+            }
         }
         return null;
     }
@@ -47,7 +58,7 @@ const EditTaskForm = ({data}) => {
                 <span>Completed:</span>
                 <span>
                     {
-                        (isLoading === true)?
+                        (isLoading === true || isLoadingRefresh === true)?
                         <div>LOADING...</div>
                         :<input type='checkbox' name='completed' checked={completed}
                             onChange={onChange} />
