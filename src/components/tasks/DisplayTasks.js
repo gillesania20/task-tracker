@@ -1,6 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { useGetTasksQuery } from './../../features/tasks/taskApiSlice';
 const DisplayTasks = () => {
     const { data, isLoading, error } = useGetTasksQuery();
+    const navigate = useNavigate();
+    const onClick = (taskId) => {
+        navigate(`/dash/tasks/display-task/${taskId}`)
+        return null;
+    }
     let content = <></>;
     if(isLoading === true){
         content = <div>IS LOADING...</div>;
@@ -15,7 +21,8 @@ const DisplayTasks = () => {
                     <span>Title</span>
                     <span>Status</span>
                 </div>
-                {data.map(task =><div key={task._id}>
+                {data.map(task =><div key={task._id}
+                    onClick={()=>onClick(task._id)}>
                     <span>{task.title}</span>
                     <span>{task.completed ?
                         'Completed'
