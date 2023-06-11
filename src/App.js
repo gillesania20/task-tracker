@@ -8,6 +8,7 @@ import Layout from './components/layout/Layout';
 import Login from './components/public/Login';
 import Register from './components/public/Register';
 import AddNewTask from './components/tasks/AddNewTask';
+import DeleteTask from './components/tasks/DeleteTask';
 import DisplaySingleTask from './components/tasks/DisplaySingleTask';
 import DisplayTasks from './components/tasks/DisplayTasks';
 import EditTask from './components/tasks/EditTask';
@@ -38,6 +39,10 @@ function App() {
                 {
                   path: '/dash/tasks/add-new',
                   element: <AddNewTask />
+                },
+                {
+                  path: '/dash/tasks/delete-task/:taskId',
+                  element: <DeleteTask />
                 },
                 {
                   path: '/dash/tasks/display-task/:taskId',
