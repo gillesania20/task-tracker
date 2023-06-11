@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useAddTaskMutation } from './../../features/tasks/taskApiSlice';
+import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const AddNewTask = () => {
     const [message, setMessage] = useState('');
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [addTask, { isLoading }] = useAddTaskMutation();
+    const [refresh, { isLoading: isLoadingRefresh }] = useRefreshMutation();
     const onChange = (e) => {
         if(e.target.name === 'title'){
             setTitle(e.target.value);
@@ -15,13 +17,22 @@ const AddNewTask = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await addTask({title, body});
-        if(typeof response.error?.data?.message !== 'undefined'){
-            setMessage(response.error.data.message);
-        }else if(typeof response.data?.message !== 'undefined'){
-            setMessage(response.data.message)
+        const refreshResponse = await refresh();
+        if(refreshResponse.data?.message === 'successful token refresh'){
+            const response = await addTask({title, body});
+            if(typeof response.error?.data?.message !== 'undefined'){
+                setMessage(response.error.data.message);
+            }else if(typeof response.data?.message !== 'undefined'){
+                setMessage(response.data.message)
+            }else{
+                setMessage('unknown error');
+            }
         }else{
-            setMessage('unknown error');
+            if(typeof refreshResponse.error?.data?.message !== 'undefined'){
+                setMessage(refreshResponse.error.data.message);
+            }else{
+                setMessage('unknown error');
+            }
         }
         return null;
     }
@@ -38,7 +49,7 @@ const AddNewTask = () => {
             </div>
             <div>
                 {
-                    (isLoading === true)?
+                    (isLoading === true || isLoadingRefresh === true)?
                     <div>Loading...</div>
                     :<button type='submit'>Add Task</button>
                 }
