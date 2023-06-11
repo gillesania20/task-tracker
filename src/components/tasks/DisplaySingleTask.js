@@ -1,8 +1,17 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useGetTaskQuery } from './../../features/tasks/taskApiSlice';
 const DisplaySingleTask = () => {
     const { taskId } = useParams();
     const { data, isLoading, error } = useGetTaskQuery({taskId});
+    const navigate = useNavigate();
+    const onClickEdit = (editId) => {
+        navigate(`/dash/tasks/edit-task/${editId}`);
+        return null;
+    }
+    const onClickDelete = (deleteId) => {
+        navigate(`/dash/tasks/delete-task/${deleteId}`);
+        return null;
+    }
     let content = <></>;
     if(isLoading === true){
         content = <div>LOADING...</div>;
@@ -33,6 +42,10 @@ const DisplaySingleTask = () => {
             <div>
                 <span>Author:</span>
                 <span>{data.user.username}</span>
+            </div>
+            <div>
+                <button onClick={()=>onClickEdit(taskId)}>Edit</button>
+                <button onClick={()=>onClickDelete(taskId)}>Delete</button>
             </div>
         </div>;
     }else{
