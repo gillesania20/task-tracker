@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useUpdateTaskMutation } from './../../features/tasks/taskApiSlice';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const EditTaskForm = ({data}) => {
@@ -10,6 +10,7 @@ const EditTaskForm = ({data}) => {
     const [completed, setCompleted] = useState(data.completed);
     const [updateTask, { isLoading }] = useUpdateTaskMutation();
     const [refresh, { isLoading: isLoadingRefresh}] = useRefreshMutation();
+    const navigate = useNavigate();
     const onChange = (e) => {
         if(e.target.name === 'title'){
             setTitle(e.target.value);
@@ -20,6 +21,10 @@ const EditTaskForm = ({data}) => {
         }
         return null;
     }
+    const onClickCancel = (cancelId) => {
+        navigate(`/dash/tasks/display-task/${cancelId}`);
+        return null;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const refreshResponse = await refresh();
@@ -27,6 +32,10 @@ const EditTaskForm = ({data}) => {
             const response = await updateTask({taskId, title, body, completed});
             if(typeof response.data?.message !== 'undefined'){
                 setMessage(response.data.message);
+                setTitle('');
+                setBody('');
+                setCompleted(false);
+                navigate(`/dash/tasks/display-task/${taskId}`);
             }else if(typeof response.error?.data?.message !== 'undefined'){
                 setMessage(response.error.data.message);
             }else{
@@ -57,16 +66,22 @@ const EditTaskForm = ({data}) => {
             <div>
                 <span>Completed:</span>
                 <span>
-                    {
-                        (isLoading === true || isLoadingRefresh === true)?
-                        <div>LOADING...</div>
-                        :<input type='checkbox' name='completed' checked={completed}
+                    <input type='checkbox' name='completed' checked={completed}
                             onChange={onChange} />
-                    }
                 </span>
             </div>
             <div>
-                <button type='submit'>Edit</button>
+                {
+                    (isLoading === true || isLoadingRefresh === true)?
+                    <div>LOADING...</div>
+                    :<button type='submit'>Edit</button>
+                }
+                <button type='button'
+                    onClick={()=>onClickCancel(taskId)}
+                    disabled={(isLoading === true || isLoadingRefresh === true)}
+                >
+                    Cancel
+                </button>
             </div>
         </form>
     );

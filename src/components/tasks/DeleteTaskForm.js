@@ -8,8 +8,8 @@ const DeleteTaskForm = () => {
     const [deleteTask, { isLoading }] = useDeleteTaskMutation();
     const [refresh, { isLoading: isLoadingRefresh }] = useRefreshMutation();
     const navigate = useNavigate();
-    const onClickCancel = (CancelId) => {
-        navigate(`/dash/tasks/display-task/${CancelId}`);
+    const onClickCancel = (cancelId) => {
+        navigate(`/dash/tasks/display-task/${cancelId}`);
         return null;
     }
     const handleSubmit = async (e) => {
@@ -47,7 +47,7 @@ const DeleteTaskForm = () => {
                     <div>Loading...</div>:
                     <button type='submit'>Delete</button>
                 }
-                <button
+                <button type='button'
                     disabled={(isLoading === true || isLoadingRefresh === true)}
                     onClick={()=>onClickCancel(taskId)}
                 >Cancel</button>
