@@ -18,6 +18,8 @@ const api = createApi({
         },
         credentials: 'include'//to manage cookies when using fetch()
     }),
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
     tagTypes: ['Users', 'Tasks'],
     endpoints: () => ({})
 });

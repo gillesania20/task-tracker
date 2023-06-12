@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDeleteTaskMutation } from './../../features/tasks/taskApiSlice';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const DeleteTaskForm = () => {
@@ -7,6 +7,11 @@ const DeleteTaskForm = () => {
     const [message, setMessage] = useState('');
     const [deleteTask, { isLoading }] = useDeleteTaskMutation();
     const [refresh, { isLoading: isLoadingRefresh }] = useRefreshMutation();
+    const navigate = useNavigate();
+    const onClickCancel = (CancelId) => {
+        navigate(`/dash/tasks/display-task/${CancelId}`);
+        return null;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const refreshResponse = await refresh();
@@ -16,6 +21,7 @@ const DeleteTaskForm = () => {
                 setMessage(response.error.data.message);
             }else if(typeof response.data?.message !== 'undefined'){
                 setMessage(response.data.message);
+                navigate('/dash/tasks/display-all-tasks')
             }else{
                 setMessage('unknown error');
             }
@@ -41,6 +47,10 @@ const DeleteTaskForm = () => {
                     <div>Loading...</div>:
                     <button type='submit'>Delete</button>
                 }
+                <button
+                    disabled={(isLoading === true || isLoadingRefresh === true)}
+                    onClick={()=>onClickCancel(taskId)}
+                >Cancel</button>
             </div>
         </form>
     );

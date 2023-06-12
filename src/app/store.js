@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import { api } from './../features/api/apiSlice';
 import authSlice from './../features/auth/authSlice';
 const reducer = {
@@ -11,4 +12,5 @@ const store = configureStore({
         .concat(api.middleware),
     devTools: process.env.NODE_ENV !== 'production'
 });
+setupListeners(store.dispatch);
 export default store;
