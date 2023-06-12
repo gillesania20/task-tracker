@@ -7,6 +7,18 @@ const DisplayTasks = () => {
         navigate(`/dash/tasks/display-task/${taskId}`)
         return null;
     }
+    let copiedArray = null;
+    const compareData = (a, b) =>{
+        let output;
+        if(a.completed === true && b.completed === false){
+            output = 1;
+        }else if(a.completed === false && b.completed === true){
+            output = -1;
+        }else{
+            output = 0;
+        }
+        return output;
+    }
     let content = <></>;
     if(isLoading === true){
         content = <div>IS LOADING...</div>;
@@ -15,13 +27,15 @@ const DisplayTasks = () => {
     }else if(data.length <= 0){
         content = <div>No task yet</div>;
     }else if(data.length > 0){
+        copiedArray = data.map(item=>item);
+        copiedArray.sort(compareData);
         content = (
             <div id = 'DisplayTasks'>
                 <div>
                     <span>Title</span>
                     <span>Status</span>
                 </div>
-                {data.map(task =><div key={task._id}
+                {copiedArray.map(task =><div key={task._id}
                     onClick={()=>onClick(task._id)}>
                     <span>{task.title}</span>
                     <span>{task.completed ?
