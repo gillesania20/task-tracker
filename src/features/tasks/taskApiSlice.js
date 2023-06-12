@@ -40,7 +40,7 @@ const taskApi = api.injectEndpoints({
                     body
                 }
             }),
-            providesTags: [{type: 'Tasks', id: 'LIST'}]
+            invalidatesTags: [{type: 'Tasks', id: 'LIST'}]
         }),
         updateTask: build.mutation({
             query: ({taskId, title, body, completed}) => ({
@@ -52,7 +52,7 @@ const taskApi = api.injectEndpoints({
                     completed
                 }
             }),
-            providesTags: (result, error, args) => (
+            invalidatesTags: (result, error, args) => (
                 [{type: 'Tasks', id: args.taskId}]
             )
         }),
@@ -61,7 +61,7 @@ const taskApi = api.injectEndpoints({
                 url: `${taskApiRoute}/${taskId}`,
                 method: 'DELETE'
             }),
-            providesTags: [{type: 'Tasks', id: 'LIST'}]
+            invalidatesTags: [{type: 'Tasks', id: 'LIST'}]
         })
     })
 })
