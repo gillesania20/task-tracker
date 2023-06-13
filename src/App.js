@@ -57,7 +57,7 @@ function App() {
                   element: <EditTask />
                 },
                 {
-                  path: '/dash/users/display-user',
+                  path: '/dash/users/display-user/:userId',
                   element: <DisplaySingleUser />
                 },
                 {

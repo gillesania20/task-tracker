@@ -9,7 +9,7 @@ const DisplayTasks = () => {
     }
     let copiedArray = null;
     const compareData = (a, b) =>{
-        let output;
+        let output = null;
         if(a.completed === true && b.completed === false){
             output = 1;
         }else if(a.completed === false && b.completed === true){

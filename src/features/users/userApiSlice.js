@@ -7,11 +7,14 @@ const userApi = api.injectEndpoints({
                 url: userApiRoute,
                 method: 'GET'
             }),
+            transformResponse: (response) => {
+                return response.users;
+            },
             providesTags: (result) => {
                 if(result){
                     return [
-                        ...result.map(({id}) =>
-                            ({type: 'Users', id})),
+                        ...result.map(({_id}) =>
+                            ({type: 'Users', id:_id})),
                         {type: 'Users', id: 'LIST'}
                     ];
                 }else{
@@ -23,7 +26,10 @@ const userApi = api.injectEndpoints({
             query: ({userId}) => ({
                 url: `${userApiRoute}/${userId}`,
                 method: 'GET'
-            })
+            }),
+            transformResponse: (response) => {
+                return response.user;
+            }
         }),
         addUser: build.mutation({
             query: ({username, password}) => ({
