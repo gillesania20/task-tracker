@@ -65,7 +65,7 @@ function App() {
                   element: <DisplayUsers />
                 },
                 {
-                  path: '/dash/users/edit-user',
+                  path: '/dash/users/edit-user/:userId',
                   element: <EditUser />
                 }
               ]

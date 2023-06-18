@@ -61,6 +61,12 @@ const userApi = api.injectEndpoints({
                 method: 'DELETE'
             }),
             invalidatesTags: [{type: 'Users', id: 'LIST'}]
+        }),
+        checkUser: build.mutation({
+            query: ({userId}) => ({
+                url: `${userApiRoute}/${userId}`,
+                method: 'GET'
+            })
         })
     })
 });
@@ -69,5 +75,6 @@ export const {
     useGetUserQuery,
     useAddUserMutation,
     useUpdateUserMutation,
-    useDeleteUserMutation
+    useDeleteUserMutation,
+    useCheckUserMutation
 } = userApi;
