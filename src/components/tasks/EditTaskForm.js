@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useUpdateTaskMutation } from './../../features/tasks/taskApiSlice';
+import { useUpdateTaskMutation, useCheckTaskMutation } from './../../features/tasks/taskApiSlice';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const EditTaskForm = ({data}) => {
     const { taskId } = useParams();
@@ -9,6 +9,7 @@ const EditTaskForm = ({data}) => {
     const [body, setBody] = useState(data.body);
     const [completed, setCompleted] = useState(data.completed);
     const [updateTask, { isLoading }] = useUpdateTaskMutation();
+    const [checkTask, { isLoading: isLoadingCheckTask }] = useCheckTaskMutation();
     const [refresh, { isLoading: isLoadingRefresh}] = useRefreshMutation();
     const navigate = useNavigate();
     const onChange = (e) => {
@@ -27,26 +28,44 @@ const EditTaskForm = ({data}) => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const refreshResponse = await refresh();
-        if(refreshResponse.data?.message === 'successful token refresh'){
-            const response = await updateTask({taskId, title, body, completed});
-            if(typeof response.data?.message !== 'undefined'){
-                setMessage(response.data.message);
-                setTitle('');
-                setBody('');
-                setCompleted(false);
-                navigate(`/dash/tasks/display-task/${taskId}`);
-            }else if(typeof response.error?.data?.message !== 'undefined'){
-                setMessage(response.error.data.message);
+        const update = {};
+        const latestTaskInfoResponse = await checkTask({taskId})
+        if(latestTaskInfoResponse.data?.message === 'display task'){
+            const refreshResponse = await refresh();
+            if(refreshResponse.data?.message === 'successful token refresh'){
+                update.taskId = taskId;
+                if(title !== latestTaskInfoResponse.data.task.title){
+                    update.title = title;
+                }
+                if(body !== latestTaskInfoResponse.data.task.body){
+                    update.body = body;
+                }
+                if(completed !== latestTaskInfoResponse.data.task.completed){
+                    update.completed = completed;
+                }
+                const response = await updateTask(update);
+                if(typeof response.data?.message !== 'undefined'){
+                    setMessage(response.data.message);
+                    setTitle('');
+                    setBody('');
+                    setCompleted(false);
+                    navigate(`/dash/tasks/display-task/${taskId}`);
+                }else if(typeof response.error?.data?.message !== 'undefined'){
+                    setMessage(response.error.data.message);
+                }else{
+                    setMessage('unknown error')
+                }
             }else{
-                setMessage('unknown error')
+                if(typeof refreshResponse.error?.data?.message !== 'undefined'){
+                    setMessage(refreshResponse.error.data.message);
+                }else{
+                    setMessage('unknown error');
+                }
             }
+        }else if(typeof latestTaskInfoResponse.error?.data?.message !== 'undefined'){
+            setMessage(latestTaskInfoResponse.error.data.message);
         }else{
-            if(typeof refreshResponse.error?.data?.message !== 'undefined'){
-                setMessage(refreshResponse.error.data.message);
-            }else{
-                setMessage('unknown error');
-            }
+            setMessage('unknown error');
         }
         return null;
     }
@@ -72,7 +91,8 @@ const EditTaskForm = ({data}) => {
             </div>
             <div>
                 {
-                    (isLoading === true || isLoadingRefresh === true)?
+                    (isLoading === true || isLoadingRefresh === true
+                        || isLoadingCheckTask)?
                     <div>LOADING...</div>
                     :<button type='submit'>Edit</button>
                 }

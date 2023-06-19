@@ -62,6 +62,12 @@ const taskApi = api.injectEndpoints({
                 method: 'DELETE'
             }),
             invalidatesTags: [{type: 'Tasks', id: 'LIST'}]
+        }),
+        checkTask: build.mutation({
+            query: ({taskId}) => ({
+                url: `${taskApiRoute}/${taskId}`,
+                method: 'GET'
+            })
         })
     })
 })
@@ -70,5 +76,6 @@ export const {
     useGetTaskQuery,
     useAddTaskMutation,
     useUpdateTaskMutation,
-    useDeleteTaskMutation
+    useDeleteTaskMutation,
+    useCheckTaskMutation
 } = taskApi;
