@@ -12,6 +12,7 @@ import DeleteTask from './components/tasks/DeleteTask';
 import DisplaySingleTask from './components/tasks/DisplaySingleTask';
 import DisplayTasks from './components/tasks/DisplayTasks';
 import EditTask from './components/tasks/EditTask';
+import DeleteUser from './components/users/DeleteUser';
 import DisplaySingleUser from './components/users/DisplaySingleUser';
 import DisplayUsers from './components/users/DisplayUsers';
 import EditUser from './components/users/EditUser';
@@ -55,6 +56,10 @@ function App() {
                 {
                   path: '/dash/tasks/edit-task/:taskId',
                   element: <EditTask />
+                },
+                {
+                  path: '/dash/users/delete-user/:userId',
+                  element: <DeleteUser />
                 },
                 {
                   path: '/dash/users/display-user/:userId',
