@@ -66,12 +66,19 @@ function App() {
                   element: <DisplaySingleUser />
                 },
                 {
-                  path: '/dash/users/display-all-users',
-                  element: <DisplayUsers />
-                },
-                {
                   path: '/dash/users/edit-user/:userId',
                   element: <EditUser />
+                },
+                {
+                  element: <Authorization 
+                    authorizedRoles = {['Admin']}
+                  />,
+                  children: [
+                    {
+                      path: '/dash/users/display-all-users',
+                      element: <DisplayUsers />
+                    }
+                  ]
                 }
               ]
             }
