@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { useGetUsersQuery } from './../../features/users/userApiSlice';
 const DisplayUsers = () => {
     const { data, isLoading, error } = useGetUsersQuery();
+    const navigate = useNavigate();
     let copiedArray = null;
     const compareData = (a,b) => {
         let output = null;
@@ -12,6 +14,10 @@ const DisplayUsers = () => {
             output = 0;
         }
         return output;
+    }
+    const onClick = (userId) => {
+        navigate(`/dash/users/display-user/${userId}`);
+        return null;
     }
     let content = <></>;
     if(isLoading === true){
@@ -31,7 +37,8 @@ const DisplayUsers = () => {
                     <span>Status</span>
                 </div>
                 {copiedArray.map((user) => {
-                    return <div key={user._id}>
+                    return <div key={user._id}
+                        onClick={()=>onClick(user._id)}>
                         <span>{user.username}</span>
                         <span>{user.role}</span>
                         <span>{(user.active === true)?
