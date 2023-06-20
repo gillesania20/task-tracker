@@ -1,8 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useGetUserQuery } from './../../features/users/userApiSlice';
 const DisplaySingleUser = () => {
     const { userId } = useParams();
     const { data, isLoading, error } = useGetUserQuery({userId});
+    const navigate = useNavigate();
+    const onClickEdit = () => {
+        navigate(`/dash/users/edit-user/${userId}`);
+        return null;
+    }
+    const onClickDelete = () => {
+        navigate(`/dash/users/delete-user/${userId}`)
+    }
     let content = <></>;
     if(isLoading === true){
         content = <div>LOADING...</div>;
@@ -26,8 +34,16 @@ const DisplaySingleUser = () => {
                         :'Not Active'}</span>
                 </div>
                 <div>
-                    <button>Edit</button>
-                    <button>Delete</button>
+                    <button type='button'
+                        onClick={onClickEdit}
+                    >
+                            Edit
+                    </button>
+                    <button type='button'
+                        onClick={onClickDelete}
+                    >
+                        Delete
+                    </button>
                 </div>
             </div>
         );
