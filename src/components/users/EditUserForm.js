@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUpdateUserMutation, useCheckUserMutation } from './../../features/users/userApiSlice';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
 const EditUserForm = ({data}) => {
+    const { userId } = useParams();
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState(data.username);
     const [password, setPassword] = useState('');
@@ -9,6 +11,7 @@ const EditUserForm = ({data}) => {
     const [updateUser, { isLoading }] = useUpdateUserMutation();
     const [refresh, { isLoading: isLoadingRefresh }] = useRefreshMutation();
     const [checkUser, { isLoading: isLoadingCheckUser }] = useCheckUserMutation();
+    const navigate = useNavigate();
     const onChange = (e) => {
         if(e.target.name === 'username'){
             setUsername(e.target.value);
@@ -17,6 +20,10 @@ const EditUserForm = ({data}) => {
         }else if(e.target.name === 'retypePassword'){
             setRetypePassword(e.target.value);
         }
+        return null;
+    }
+    const onClickCancel = () => {
+        navigate(`/dash/users/display-user/${userId}`)
         return null;
     }
     const handleSubmit = async (e) => {
@@ -39,6 +46,10 @@ const EditUserForm = ({data}) => {
                     const response = await updateUser(update);
                     if(typeof response.data?.message !== 'undefined'){
                         setMessage(response.data.message);
+                        setUsername('');
+                        setPassword('');
+                        setRetypePassword('');
+                        navigate(`/dash/users/display-user/${userId}`);
                     }else if(typeof response.error?.data?.message !== 'undefined'){
                         setMessage(response.error.data.message);
                     }else{
@@ -86,6 +97,9 @@ const EditUserForm = ({data}) => {
                     <div>LOADING...</div>
                     :<button type='submit'>Edit User</button>
                 }
+                <button type='button' onClick={onClickCancel}>
+                    Cancel
+                </button>
             </div>
         </form>
     );
