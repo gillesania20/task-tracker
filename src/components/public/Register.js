@@ -1,12 +1,13 @@
-import { useAddUserMutation } from './../../features/users/userApiSlice';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAddUserMutation } from './../../features/users/userApiSlice';
 const Register = () => {
-    //let response = null;
     const [register] = useAddUserMutation();
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState(''); 
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
     const handleOnChange = (e) => {
         if(e.target.name === 'uname'){
             setUsername(e.target.value);
@@ -15,6 +16,10 @@ const Register = () => {
         }else if(e.target.name === 'confirmPass'){
             setConfirmPassword(e.target.value);
         }
+        return null;
+    }
+    const onClickCancel = () => {
+        navigate('/login');
         return null;
     }
     const handleSubmit = async (e) => {
@@ -28,10 +33,16 @@ const Register = () => {
             setMessage('Please make sure confirm password is same in password');
         }else{
             const response = await register({username, password});
-            if(typeof response.error !== 'undefined'){
-                setMessage(response.error.data.message);
-            }else if(typeof response.data !== 'undefined'){
+            if(response.data?.message === 'created new user'){
                 setMessage(response.data.message);
+                setUsername('');
+                setPassword('');
+                setConfirmPassword('');
+                navigate('/login');
+            }else if(typeof response.error?.data?.message !== 'undefined'){
+                setMessage(response.error.data.message);
+            }else{
+                setMessage('unknown error');
             }
         }
         return null;
@@ -56,6 +67,9 @@ const Register = () => {
             </div>
             <div>
                 <button type='submit'>Register</button>
+                <button type='button' onClick={onClickCancel}>
+                    Cancel
+                </button>
             </div>
         </form>
     );
