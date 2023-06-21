@@ -1,10 +1,12 @@
-import { useLoginMutation } from './../../features/auth/authApiSlice';
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useLoginMutation } from './../../features/auth/authApiSlice';
 const Login = () => {
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [login] = useLoginMutation();
+    const navigate = useNavigate();
     let response = null;
     const handleOnChange = (e) => {
         if(e.target.name === 'uname'){
@@ -20,10 +22,15 @@ const Login = () => {
             setMessage('Please fill up all text boxes');
         }else{
             response = await login({username, password});
-            if(typeof response.error !== 'undefined'){
-                setMessage(response.error.data.message);
-            }else if(typeof response.data !== 'undefined'){
+            if(response.data?.message === 'successful login'){
                 setMessage(response.data.message);
+                setUsername('');
+                setPassword('');
+                navigate('/dash/tasks/display-all-tasks');
+            }else if(typeof response.error?.data?.message !== 'undefined'){
+                setMessage(response.error.data.message);
+            }else{
+                setMessage('unknown error');
             }
         }
         return null;
@@ -45,7 +52,7 @@ const Login = () => {
                 <button type='submit'>Login</button>
             </div>
             <div>
-                <a href='/'>Register</a>
+                <Link to='/register'>Register</Link>
             </div>
         </form>
     );
