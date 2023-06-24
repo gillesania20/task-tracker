@@ -45,11 +45,19 @@ const EditUserForm = ({data}) => {
                     }
                     const response = await updateUser(update);
                     if(typeof response.data?.message !== 'undefined'){
-                        setMessage(response.data.message);
-                        setUsername('');
-                        setPassword('');
-                        setRetypePassword('');
-                        navigate(`/dash/users/display-user/${userId}`);
+                        if(username !== latestUserInfoResponse.data.user.username){
+                            setMessage(response.data.message);
+                            setUsername('');
+                            setPassword('');
+                            setRetypePassword('');
+                            navigate('/login');
+                        }else{
+                            setMessage(response.data.message);
+                            setUsername('');
+                            setPassword('');
+                            setRetypePassword('');
+                            navigate(`/dash/users/display-user/${userId}`);
+                        }
                     }else if(typeof response.error?.data?.message !== 'undefined'){
                         setMessage(response.error.data.message);
                     }else{

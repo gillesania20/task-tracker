@@ -1,7 +1,11 @@
 import { api } from './../api/apiSlice';
 import {
     setToken,
-    setRole
+    setRole,
+    setUserId,
+    resetToken,
+    resetRole,
+    resetUserId
 } from './authSlice';
 const authApiRoute = 'auth';
 const authApi = api.injectEndpoints({
@@ -43,6 +47,7 @@ const authApi = api.injectEndpoints({
                     const accessToken = data.accessToken;
                     dispatch(setToken({accessToken}));
                     dispatch(setRole({accessToken}));
+                    dispatch(setUserId(data.userId));
                 }catch(err){
                     //error
                 }
@@ -52,10 +57,23 @@ const authApi = api.injectEndpoints({
             query: () => ({
                 url: `${authApiRoute}/logout`,
                 method: 'POST'
-            })
+            }),
+            async onQueryStarted(
+                args,
+                { dispatch, queryFulfilled }
+            ){
+                try{
+                    await queryFulfilled;
+                    dispatch(resetToken());
+                    dispatch(resetRole());
+                    dispatch(resetUserId());
+                }catch(err){
+                    //err
+                }
+            }
         })
     })
-})
+});
 export const {
     useLoginMutation,
     useRefreshMutation,
