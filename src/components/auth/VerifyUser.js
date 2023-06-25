@@ -1,29 +1,27 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
+import LoginFirst from './../errors/LoginFirst';
 const VerifyUser = () => {
-    const [error, setError] = useState(null);
-    const [refresh, { isLoading }] = useRefreshMutation();
+    const [refresh, { data, isLoading, error }] = useRefreshMutation();
     const flagRef = useRef(true);
     let content = <></>;
-    const handleRefresh = async () => {
-        const response = await refresh();
-        if(typeof response.error !== 'undefined'){
-            setError(response.error);
-        }
-        return null;
-    }
     useEffect(()=>{
         if(flagRef.current === true){
-            handleRefresh();
+            refresh();
             flagRef.current = false;
         }
-    }, []);
+    }, [refresh]);
     if(isLoading === true){
-        content = <div>IS LOADING...</div>;
-    }else if(error !== null){
-        content = <div>PLEASE LOGIN FIRST</div>;
-    }else{
+        content = <ClipLoader />;
+    }else if(
+        typeof error?.data?.message !== 'undefined'
+    ){
+        content = <LoginFirst />;
+    }else if(
+        typeof data?.message !== 'undefined'
+    ){
         content = <Outlet />
     }
     return content;

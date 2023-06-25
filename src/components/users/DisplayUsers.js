@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { useGetUsersQuery } from './../../features/users/userApiSlice';
+import ErrorWithMessage from './../errors/ErrorWithMessage';
+import DefaultError from './../errors/DefaultError';
 const DisplayUsers = () => {
     const { data, isLoading, error } = useGetUsersQuery();
     const navigate = useNavigate();
@@ -21,16 +24,20 @@ const DisplayUsers = () => {
     }
     let content = <></>;
     if(isLoading === true){
-        content = <div>LOADING...</div>;
+        content = <ClipLoader />;
     }else if(typeof error?.data?.message !== 'undefined'){
-        content = <div>{error.data.message}</div>;
+        content = <ErrorWithMessage message={error.data.message} />;
     }else if(data.length <= 0){
-        content = <div>no users yet</div>;
+        content = <div id='displayUsers'>
+            <h1>Display all users</h1>
+            <div>no users yet</div>
+        </div>;
     }else if(data.length > 0){
         copiedArray = data.map(item=>item);
         copiedArray.sort(compareData);
         content = (
-            <div id = 'DisplayUsers'>
+            <div id = 'displayUsers'>
+                <h1>Display all users</h1>
                 <div>
                     <span>Username</span>
                     <span>Role</span>
@@ -47,9 +54,9 @@ const DisplayUsers = () => {
                     </div>
                 })}
             </div>
-        )
+        );
     }else{
-        content = <div>ERROR</div>
+        content = <DefaultError />;
     }
     return content;
 }

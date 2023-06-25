@@ -35,22 +35,30 @@ const DeleteTaskForm = () => {
         return null;
     }
     let content = (
-        <form id='DeleteTask' onSubmit={handleSubmit}>
+        <form id='deleteTask' onSubmit={handleSubmit}>
             {(message.length>0)?<div>{message}</div>:''}
             <div>
                 <span>Task Id:</span>
                 <span>{taskId}</span>
             </div>
             <div>
-                {
-                    (isLoading === true || isLoadingRefresh === true)?
-                    <div>Loading...</div>:
-                    <button type='submit'>Delete</button>
-                }
+                <button type='submit'
+                    disabled={(
+                        isLoading === true
+                        ||isLoadingRefresh === true
+                    )}
+                >
+                    Delete
+                </button>
                 <button type='button'
-                    disabled={(isLoading === true || isLoadingRefresh === true)}
+                    disabled={(
+                        isLoading === true
+                        ||isLoadingRefresh === true
+                    )}
                     onClick={()=>onClickCancel(taskId)}
-                >Cancel</button>
+                >
+                    Cancel
+                </button>
             </div>
         </form>
     );

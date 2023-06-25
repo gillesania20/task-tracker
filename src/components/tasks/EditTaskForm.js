@@ -70,7 +70,7 @@ const EditTaskForm = ({data}) => {
         return null;
     }
     const content = (
-        <form id = 'EditTask' onSubmit={handleSubmit}>
+        <form id = 'editTask' onSubmit={handleSubmit}>
             {(message.length > 0)?<div>{message}</div>:''}
             <div><span>Title:</span></div>
             <div>
@@ -90,15 +90,22 @@ const EditTaskForm = ({data}) => {
                 </span>
             </div>
             <div>
-                {
-                    (isLoading === true || isLoadingRefresh === true
-                        || isLoadingCheckTask)?
-                    <div>LOADING...</div>
-                    :<button type='submit'>Edit</button>
-                }
+                <button type='submit'
+                    disabled={(
+                        isLoading === true
+                        ||isLoadingRefresh === true
+                        ||isLoadingCheckTask
+                    )}
+                >
+                    Edit
+                </button>
                 <button type='button'
                     onClick={()=>onClickCancel(taskId)}
-                    disabled={(isLoading === true || isLoadingRefresh === true)}
+                    disabled={(
+                        isLoading === true
+                        ||isLoadingRefresh === true
+                        ||isLoadingCheckTask
+                    )}
                 >
                     Cancel
                 </button>

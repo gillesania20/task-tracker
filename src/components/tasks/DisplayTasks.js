@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { useGetTasksQuery } from './../../features/tasks/taskApiSlice';
+import ErrorWithMessage from './../errors/ErrorWithMessage';
+import DefaultError from './../errors/DefaultError';
 const DisplayTasks = () => {
     const { data, isLoading, error } = useGetTasksQuery();
     const navigate = useNavigate();
@@ -21,16 +24,20 @@ const DisplayTasks = () => {
     }
     let content = <></>;
     if(isLoading === true){
-        content = <div>IS LOADING...</div>;
+        content = <ClipLoader />;
     }else if(typeof error?.data?.message !== 'undefined'){
-        content = <div>{error.data.message}</div>;
+        content = <ErrorWithMessage message={error.data.message}/>;
     }else if(data.length <= 0){
-        content = <div>No task yet</div>;
+        content = <div id='displayTasks'>
+            <h1>Display all tasks</h1>
+            <div>No tasks yet</div>
+        </div>;
     }else if(data.length > 0){
         copiedArray = data.map(item=>item);
         copiedArray.sort(compareData);
         content = (
-            <div id = 'DisplayTasks'>
+            <div id='displayTasks'>
+                <h1>Display all tasks</h1>
                 <div>
                     <span>Title</span>
                     <span>Status</span>
@@ -45,7 +52,7 @@ const DisplayTasks = () => {
             </div>
         );
     }else{
-        content = <div>ERROR</div>;
+        content = <DefaultError />;
     }
     return content;
 }

@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDeleteUserMutation } from './../../features/users/userApiSlice';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
-import { selectRole } from './../../features/auth/authSlice';
+import { selectRole, selectUserId } from './../../features/auth/authSlice';
 const DeleteUserForm = () => {
     const { userId } = useParams();
+    const clientId = useSelector(selectUserId);
     const [message, setMessage] = useState('');
     const [deleteUser, { isLoading }] = useDeleteUserMutation();
     const [refresh, { isLoading: isLoadingRefresh }] = useRefreshMutation();
@@ -22,8 +23,16 @@ const DeleteUserForm = () => {
             const response = await deleteUser({userId});
             if(response.data?.message === 'user deleted'){
                 setMessage(response.data.message);
-                if(role === 'Admin'){
+                if(
+                    role === 'Admin'
+                    && clientId !== userId
+                ){
                     navigate('/dash/users/display-all-users');
+                }else if(
+                    role === 'Admin'
+                    && clientId === userId
+                ){
+                    navigate('/login');
                 }else{
                     navigate('/login');
                 }
@@ -39,19 +48,27 @@ const DeleteUserForm = () => {
         }
         return null;
     }
-    const content = <form id='DeleteUser' onSubmit={handleSubmit}>
+    const content = <form id='deleteUser' onSubmit={handleSubmit}>
         {(message.length>0)?<div>{message}</div>:''}
         <div>
             <span>UserId:</span>
             <span>{userId}</span>
         </div>
         <div>
-            {(isLoading === true || isLoadingRefresh === true)?
-                <div>LOADING...</div>
-                :<button type='submit'>Delete</button>
-            }
+            <button type='submit'
+                disabled={(
+                    isLoading === true
+                    ||isLoadingRefresh === true
+                )}
+            >
+                Delete
+            </button>
             <button type='button'
                 onClick={onClickCancel}
+                disabled={(
+                    isLoading === true
+                    ||isLoadingRefresh === true
+                )}
             >
                 Cancel
             </button>

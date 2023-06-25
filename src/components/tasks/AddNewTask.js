@@ -1,6 +1,10 @@
 import AddNewTaskForm from './AddNewTaskForm';
 const AddNewTask = () => {
-    const content = <AddNewTaskForm />;
-    return content;
+    return (
+        <div id='addNewTask'>
+            <h1>Add new task</h1>
+            <AddNewTaskForm />
+        </div>
+    );
 }
 export default AddNewTask;

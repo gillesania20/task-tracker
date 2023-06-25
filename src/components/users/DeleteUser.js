@@ -1,6 +1,10 @@
 import DeleteUserForm from './DeleteUserForm';
 const DeleteUser = () => {
-    const content = <DeleteUserForm />;
-    return content;
+    return (
+        <div id='deleteUser'>
+            <h1>Delete user</h1>
+            <DeleteUserForm />
+        </div>
+    );
 }
 export default DeleteUser;

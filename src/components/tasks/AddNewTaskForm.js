@@ -39,7 +39,7 @@ const AddNewTaskForm = () => {
         return null;
     }
     return (
-        <form id = 'AddNewTask' onSubmit={handleSubmit}>
+        <form id = 'addNewTaskForm' onSubmit={handleSubmit}>
             {(message.length > 0)?<div>{message}</div>:''}
             <div>
                 <input type='text' placeholder='Title'
@@ -50,11 +50,13 @@ const AddNewTaskForm = () => {
                     value={body} onChange={onChange}></textarea>
             </div>
             <div>
-                {
-                    (isLoading === true || isLoadingRefresh === true)?
-                    <div>Loading...</div>
-                    :<button type='submit'>Add Task</button>
-                }
+                <button type='submit'
+                    disabled={(isLoading === true
+                        || isLoadingRefresh === true
+                    )}
+                >
+                    Add Task
+                </button>
             </div>
         </form>
     );

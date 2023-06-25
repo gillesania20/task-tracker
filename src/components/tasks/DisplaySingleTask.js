@@ -1,5 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { useGetTaskQuery } from './../../features/tasks/taskApiSlice';
+import ErrorWithMessage from './../errors/ErrorWithMessage';
 const DisplaySingleTask = () => {
     const { taskId } = useParams();
     const { data, isLoading, error } = useGetTaskQuery({taskId});
@@ -14,11 +16,12 @@ const DisplaySingleTask = () => {
     }
     let content = <></>;
     if(isLoading === true){
-        content = <div>LOADING...</div>;
+        content = <ClipLoader />;
     }else if(typeof error?.data?.message !== 'undefined'){
-        content = <div>{error.data.message}</div>;
+        content = <ErrorWithMessage message={error.data.message} />;
     }else if(typeof data !== 'undefined'){
-        content = <div id = 'DisplaySingleTask'>
+        content = <div id = 'displaySingleTask'>
+            <h1>Display task</h1>
             <div>
                 <span>Title:</span>
                 <span>{data.title}</span>

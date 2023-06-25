@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUpdateUserMutation, useCheckUserMutation } from './../../features/users/userApiSlice';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
+import { selectRole, selectUserId } from './../../features/auth/authSlice';
 const EditUserForm = ({data}) => {
     const { userId } = useParams();
+    const clientId = useSelector(selectUserId);
+    const role = useSelector(selectRole);
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState(data.username);
     const [password, setPassword] = useState('');
@@ -45,18 +49,38 @@ const EditUserForm = ({data}) => {
                     }
                     const response = await updateUser(update);
                     if(typeof response.data?.message !== 'undefined'){
-                        if(username !== latestUserInfoResponse.data.user.username){
+                        if(
+                            role === 'Admin'
+                            && clientId === userId
+                        ){
                             setMessage(response.data.message);
                             setUsername('');
                             setPassword('');
                             setRetypePassword('');
                             navigate('/login');
-                        }else{
+                        }else if(
+                            role === 'Admin'
+                            && clientId !== userId
+                        ){
                             setMessage(response.data.message);
                             setUsername('');
                             setPassword('');
                             setRetypePassword('');
                             navigate(`/dash/users/display-user/${userId}`);
+                        }else{
+                            if(username !== latestUserInfoResponse.data.user.username){
+                                setMessage(response.data.message);
+                                setUsername('');
+                                setPassword('');
+                                setRetypePassword('');
+                                navigate('/login');
+                            }else{
+                                setMessage(response.data.message);
+                                setUsername('');
+                                setPassword('');
+                                setRetypePassword('');
+                                navigate(`/dash/users/display-user/${userId}`);
+                            }
                         }
                     }else if(typeof response.error?.data?.message !== 'undefined'){
                         setMessage(response.error.data.message);
@@ -77,7 +101,7 @@ const EditUserForm = ({data}) => {
         return null;
     }
     return (
-        <form id = 'EditUser' onSubmit={handleSubmit}>
+        <form id = 'editUser' onSubmit={handleSubmit}>
             {(message.length>0)?<div>{message}</div>:''}
             <div>
                 <span>Username:</span>
@@ -100,12 +124,23 @@ const EditUserForm = ({data}) => {
                     value={retypePassword} onChange={onChange} />
             </div>
             <div>
-                {(isLoading === true || isLoadingRefresh === true
-                || isLoadingCheckUser === true)?
-                    <div>LOADING...</div>
-                    :<button type='submit'>Edit User</button>
-                }
-                <button type='button' onClick={onClickCancel}>
+                <button type='submit'
+                    disabled={(
+                        isLoading === true
+                        ||isLoadingRefresh === true
+                        ||isLoadingCheckUser === true
+                    )}
+                >
+                    Edit User
+                </button>
+                <button type='button'
+                    onClick={onClickCancel}
+                    disabled={(
+                        isLoading === true
+                        ||isLoadingRefresh === true
+                        ||isLoadingCheckUser === true
+                    )}
+                >
                     Cancel
                 </button>
             </div>
