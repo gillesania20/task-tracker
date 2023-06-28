@@ -1,11 +1,11 @@
 const ErrorWithMessage = ({message}) => {
     return (
-        <div>
+        <div class='shadow-lg py-5 px-3 rounded text-center'>
             <div>
                 oops something went wrong.
             </div>
             <div>
-                {message}
+                {message}{'.'}
             </div>
         </div>
     );

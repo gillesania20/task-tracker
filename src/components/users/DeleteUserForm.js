@@ -49,17 +49,18 @@ const DeleteUserForm = () => {
         return null;
     }
     const content = <form id='deleteUser' onSubmit={handleSubmit}>
-        {(message.length>0)?<div>{message}</div>:''}
-        <div>
-            <span>UserId:</span>
-            <span>{userId}</span>
+        {(message.length>0)?<div class='text-warning'>{message}</div>:''}
+        <div class='row pb-4'>
+            <span class='col'>UserId:</span>
+            <span class='col'>{userId}</span>
         </div>
-        <div>
+        <div class='btn-group w-100'>
             <button type='submit'
                 disabled={(
                     isLoading === true
                     ||isLoadingRefresh === true
                 )}
+                class='btn btn-outline-danger'
             >
                 Delete
             </button>
@@ -69,6 +70,7 @@ const DeleteUserForm = () => {
                     isLoading === true
                     ||isLoadingRefresh === true
                 )}
+                class='btn btn-outline-secondary'
             >
                 Cancel
             </button>

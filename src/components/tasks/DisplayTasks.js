@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
 import { useGetTasksQuery } from './../../features/tasks/taskApiSlice';
 import ErrorWithMessage from './../errors/ErrorWithMessage';
 import DefaultError from './../errors/DefaultError';
+import Loader from './../loader/Loader';
 const DisplayTasks = () => {
     const { data, isLoading, error } = useGetTasksQuery();
     const navigate = useNavigate();
@@ -24,28 +24,28 @@ const DisplayTasks = () => {
     }
     let content = <></>;
     if(isLoading === true){
-        content = <ClipLoader />;
+        content = <Loader />;
     }else if(typeof error?.data?.message !== 'undefined'){
         content = <ErrorWithMessage message={error.data.message}/>;
     }else if(data.length <= 0){
-        content = <div id='displayTasks'>
-            <h1>Display all tasks</h1>
-            <div>No tasks yet</div>
+        content = <div id='displayTasks' class='shadow-lg py-5 px-3 rounded'>
+            <h1 class='text-center mb-5'>Display all tasks</h1>
+            <div class='text-center'>No tasks yet</div>
         </div>;
     }else if(data.length > 0){
         copiedArray = data.map(item=>item);
         copiedArray.sort(compareData);
         content = (
-            <div id='displayTasks'>
-                <h1>Display all tasks</h1>
-                <div>
-                    <span>Title</span>
-                    <span>Status</span>
+            <div id='displayTasks' class='shadow-lg py-5 px-3 rounded'>
+                <h1 class='text-center mb-5'>Display all tasks</h1>
+                <div class='row mb-3 p-2'>
+                    <span class='col fw-medium text-center'>Title</span>
+                    <span class='col fw-medium text-center'>Status</span>
                 </div>
                 {copiedArray.map(task =><div key={task._id}
-                    onClick={()=>onClick(task._id)}>
-                    <span>{task.title}</span>
-                    <span>{task.completed ?
+                    onClick={()=>onClick(task._id)} class='row mb-3 rounded p-2 row-item'>
+                    <span class='col text-center'>{task.title}</span>
+                    <span class='col text-center'>{task.completed ?
                         'Completed'
                         : 'Not Completed'}</span>
                 </div>)}

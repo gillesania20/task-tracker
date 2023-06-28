@@ -1,6 +1,6 @@
 const DefaultError = () => {
     return (
-        <div>
+        <div class='shadow-lg py-5 px-3 rounded text-center'>
             oops something went wrong...
         </div>
     );

@@ -5,9 +5,11 @@ import Header from './HeaderSection';
 import Footer from './FooterSection';
 const Layout = () => {
     return (
-        <div>
+        <div class=''>
             <Header />
-            <Outlet />
+            <div class='my-5 py-4 px-3 container'>
+                <Outlet />
+            </div>
             <Footer />
         </div>
     );

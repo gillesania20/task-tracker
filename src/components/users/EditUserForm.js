@@ -102,34 +102,41 @@ const EditUserForm = ({data}) => {
     }
     return (
         <form id = 'editUser' onSubmit={handleSubmit}>
-            {(message.length>0)?<div>{message}</div>:''}
+            {(message.length>0)?<div class='text-warning'>{message}</div>:''}
             <div>
-                <span>Username:</span>
-                <input type='text' name='username'
-                    value={username} onChange={onChange} />
+                <label for='username' class='form-label cursor-pointer'
+                >Username:</label>
+                <input id='username' type='text' name='username'
+                    value={username} onChange={onChange} 
+                    class='form-control border border-primary-subtle mb-2' />
             </div>
             <div>
-                <span>Leave password empty if you will not change
+                <span class='form-text text-danger'>Leave password empty if you will not change
                     password
                 </span>
             </div>
             <div>
-                <span>Password:</span>
-                <input type='password' name='password'
-                    value={password} onChange={onChange} />
+                <label for='password' class='form-label cursor-pointer'>Password:</label>
+                <input id='password' type='password' name='password'
+                    value={password} onChange={onChange}
+                    class='form-control border border-primary-subtle mb-2'
+                />
             </div>
             <div>
-                <span>Retype Password</span>
-                <input type='password' name='retypePassword'
-                    value={retypePassword} onChange={onChange} />
+                <label for='retypePassword' class='form-label cursor-pointer'>Retype Password:</label>
+                <input id='retypePassword' type='password' name='retypePassword'
+                    value={retypePassword} onChange={onChange}
+                    class='form-control border border-primary-subtle mb-4'
+                />
             </div>
-            <div>
+            <div class='btn-group w-100'>
                 <button type='submit'
                     disabled={(
                         isLoading === true
                         ||isLoadingRefresh === true
                         ||isLoadingCheckUser === true
                     )}
+                    class='btn btn-outline-primary'
                 >
                     Edit User
                 </button>
@@ -140,6 +147,7 @@ const EditUserForm = ({data}) => {
                         ||isLoadingRefresh === true
                         ||isLoadingCheckUser === true
                     )}
+                    class='btn btn-outline-secondary'
                 >
                     Cancel
                 </button>

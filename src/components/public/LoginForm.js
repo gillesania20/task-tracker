@@ -37,24 +37,30 @@ const LoginForm = () => {
     }
     return (
         <form id = 'loginForm' onSubmit={handleSubmit}>
-            {(message.length > 0)?<div>{message}</div>:''}
+            {(message.length > 0)?<div class='text-warning'>{message}</div>:''}
             <div>
-                <input type='text' name='uname' value={username}
-                    onChange={handleOnChange}
+                <label for='uname' class='form-label cursor-pointer'>Username:</label>
+                <input type='text' id='uname' name='uname' value={username}
+                    onChange={handleOnChange} class='form-control'
+                    placeholder='Username'
                 />
             </div>
             <div>
-                <input type='password' name='pass' value={password}
-                    onChange={handleOnChange}
+                <label for='pass' class='form-label cursor-pointer'>Password:</label>
+                <input type='password' id='pass' name='pass' value={password}
+                    onChange={handleOnChange} class='form-control mb-2'
+                    placeholder='Password'
                 />
             </div>
             <div>
-                <button type='submit' disabled={isLoading}>
+                <button type='submit' disabled={isLoading}
+                    class='btn btn-outline-primary w-100 mb-1'>
                     Login
                 </button>
             </div>
-            <div>
-                <Link to='/register'>Register</Link>
+            <div class='text-center'>
+                <Link to='/register' class='text-decoration-none
+                    text-primary'>Register</Link>
             </div>
         </form>
     );

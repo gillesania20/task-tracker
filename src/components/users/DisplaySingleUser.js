@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
 import { useGetUserQuery } from './../../features/users/userApiSlice';
 import ErrorWithMessage from './../errors/ErrorWithMessage';
 import DefaultError from './../errors/DefaultError';
+import Loader from './../loader/Loader';
 const DisplaySingleUser = () => {
     const { userId } = useParams();
     const { data, isLoading, error } = useGetUserQuery({userId});
@@ -16,38 +16,42 @@ const DisplaySingleUser = () => {
     }
     let content = <></>;
     if(isLoading === true){
-        content = <ClipLoader />;
+        content = <Loader />;
     }else if(typeof error?.data?.message !== 'undefined'){
         content = <ErrorWithMessage message={error.data.message} />;
     }else if(typeof data !== 'undefined'){
         content = (
-            <div id = 'displaySingleUser'>
-                <h1>Display user</h1>
-                <div>
-                    <span>Username:</span>
-                    <span>{data.username}</span>
+            <div id = 'displaySingleUser' class='shadow-lg py-5 px-3 rounded'>
+                <h1 class='text-center mb-5'>Display user</h1>
+                <div class='row pb-3'>
+                    <span class='col'>Username:</span>
+                    <span class='col'>{data.username}</span>
                 </div>
-                <div>
-                    <span>Role:</span>
-                    <span>{data.role}</span>
+                <div class='row pb-3'>
+                    <span class='col'>Role:</span>
+                    <span class='col'>{data.role}</span>
                 </div>
-                <div>
-                    <span>Status:</span>
-                    <span>{(data.active === true)
+                <div class='row pb-4'>
+                    <span class='col'>Status:</span>
+                    <span class='col'>{(data.active === true)
                         ?'Active'
                         :'Not Active'}</span>
                 </div>
-                <div>
-                    <button type='button'
-                        onClick={onClickEdit}
-                    >
-                            Edit
-                    </button>
-                    <button type='button'
-                        onClick={onClickDelete}
-                    >
-                        Delete
-                    </button>
+                <div class='row'>
+                    <div class='btn-group'>
+                        <button type='button'
+                            onClick={onClickEdit}
+                            class='btn btn-outline-primary'
+                        >
+                                Edit
+                        </button>
+                        <button type='button'
+                            onClick={onClickDelete}
+                            class='btn btn-outline-danger'
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </div>
         );

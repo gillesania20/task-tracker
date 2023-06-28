@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
 import { useRefreshMutation } from './../../features/auth/authApiSlice';
 import LoginFirst from './../errors/LoginFirst';
+import Loader from './../loader/Loader';
 const VerifyUser = () => {
     const [refresh, { data, isLoading, error }] = useRefreshMutation();
     const flagRef = useRef(true);
@@ -14,7 +14,7 @@ const VerifyUser = () => {
         }
     }, [refresh]);
     if(isLoading === true){
-        content = <ClipLoader />;
+        content = <Loader />;
     }else if(
         typeof error?.data?.message !== 'undefined'
     ){
@@ -23,7 +23,6 @@ const VerifyUser = () => {
         typeof data?.message !== 'undefined'
     ){
         content = <Outlet />
-    }
-    return content;
+    }return content;
 }
 export default VerifyUser;

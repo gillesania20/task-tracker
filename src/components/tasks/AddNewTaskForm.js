@@ -39,21 +39,27 @@ const AddNewTaskForm = () => {
         return null;
     }
     return (
-        <form id = 'addNewTaskForm' onSubmit={handleSubmit}>
-            {(message.length > 0)?<div>{message}</div>:''}
+        <form id = 'addNewTaskForm' onSubmit={handleSubmit}
+            class=''>
+            {(message.length > 0)?<div class='text-warning'>{message}</div>:''}
             <div>
-                <input type='text' placeholder='Title'
-                    name='title' value={title} onChange={onChange}/>
+                <label for='title' class='form-label cursor-pointer'>Title:</label>
+                <input type='text' id='title' placeholder='Title'
+                    name='title' value={title} onChange={onChange}
+                    class='form-control border border-primary-subtle mb-2' />
             </div>
             <div>
+                <label for='body' class='form-label cursor-pointer'>Body:</label>
                 <textarea placeholder='Body' name='body'
-                    value={body} onChange={onChange}></textarea>
+                    value={body} onChange={onChange}
+                    class='form-control border border-primary-subtle mb-4' rows='5'></textarea>
             </div>
-            <div>
+            <div class='text-center'>
                 <button type='submit'
                     disabled={(isLoading === true
                         || isLoadingRefresh === true
                     )}
+                    class='btn btn-outline-primary'
                 >
                     Add Task
                 </button>
