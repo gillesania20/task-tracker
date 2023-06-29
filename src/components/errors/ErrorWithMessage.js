@@ -4,7 +4,7 @@ const ErrorWithMessage = ({message}) => {
             <div>
                 oops something went wrong.
             </div>
-            <div>
+            <div class='text-danger'>
                 {message}{'.'}
             </div>
         </div>
