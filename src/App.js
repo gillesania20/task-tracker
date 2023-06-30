@@ -23,6 +23,10 @@ function App() {
       errorElement: <DefaultError />,
       children: [
         {
+          index: true,
+          element: <Login />
+        },
+        {
           path: '/login',
           element: <Login />
         },
