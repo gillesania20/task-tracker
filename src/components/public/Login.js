@@ -1,10 +1,10 @@
 import LoginForm from './LoginForm';
 const Login = () => {
     return (
-        <div id='login' class='min-vh-100 d-flex justify-content-center
+        <div id='login' className='min-vh-100 d-flex justify-content-center
             align-items-center bg-dark text-light'>
-            <div class='shadow-lg py-5 px-3 rounded'>
-                <h1 class='text-center mb-3'>Login</h1>
+            <div className='shadow-lg py-5 px-3 rounded'>
+                <h1 className='text-center mb-3'>Login</h1>
                 <LoginForm />
             </div>
         </div>

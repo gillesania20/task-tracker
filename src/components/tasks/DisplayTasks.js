@@ -28,24 +28,24 @@ const DisplayTasks = () => {
     }else if(typeof error?.data?.message !== 'undefined'){
         content = <ErrorWithMessage message={error.data.message}/>;
     }else if(data.length <= 0){
-        content = <div id='displayTasks' class='shadow-lg py-5 px-3 rounded'>
-            <h1 class='text-center mb-5'>Display all tasks</h1>
-            <div class='text-center'>No tasks yet</div>
+        content = <div id='displayTasks' className='shadow-lg py-5 px-3 rounded'>
+            <h1 className='text-center mb-5'>Display all tasks</h1>
+            <div className='text-center'>No tasks yet</div>
         </div>;
     }else if(data.length > 0){
         copiedArray = data.map(item=>item);
         copiedArray.sort(compareData);
         content = (
-            <div id='displayTasks' class='shadow-lg py-5 px-3 rounded'>
-                <h1 class='text-center mb-5'>Display all tasks</h1>
-                <div class='row mb-3 p-2'>
-                    <span class='col fw-medium text-center'>Title</span>
-                    <span class='col fw-medium text-center'>Status</span>
+            <div id='displayTasks' className='shadow-lg py-5 px-3 rounded'>
+                <h1 className='text-center mb-5'>Display all tasks</h1>
+                <div className='row mb-3 p-2'>
+                    <span className='col fw-medium text-center'>Title</span>
+                    <span className='col fw-medium text-center'>Status</span>
                 </div>
                 {copiedArray.map(task =><div key={task._id}
-                    onClick={()=>onClick(task._id)} class='row mb-3 rounded p-2 row-item'>
-                    <span class='col text-center'>{task.title}</span>
-                    <span class='col text-center'>{task.completed ?
+                    onClick={()=>onClick(task._id)} className='row mb-3 rounded p-2 row-item'>
+                    <span className='col text-center'>{task.title}</span>
+                    <span className='col text-center'>{task.completed ?
                         'Completed'
                         : 'Not Completed'}</span>
                 </div>)}

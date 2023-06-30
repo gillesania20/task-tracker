@@ -71,24 +71,24 @@ const EditTaskForm = ({data}) => {
     }
     const content = (
         <form id = 'editTask' onSubmit={handleSubmit}>
-            {(message.length > 0)?<div class='text-warning'>{message}</div>:''}
-            <label for='title' class='form-label cursor-pointer'>Title:</label>
+            {(message.length > 0)?<div className='text-warning'>{message}</div>:''}
+            <label htmlFor='title' className='form-label cursor-pointer'>Title:</label>
             <div>
-                <input id='title' class='form-control border border-primary-subtle mb-2' type='text' placeholder ='Title'
+                <input id='title' className='form-control border border-primary-subtle mb-2' type='text' placeholder ='Title'
                     name='title' value={title} onChange={onChange} />
             </div>
-            <label for='body' class='form-label cursor-pointer'>Body:</label>
+            <label htmlFor='body' className='form-label cursor-pointer'>Body:</label>
             <div>
-                <textarea id='body' class='form-control border border-primary-subtle mb-2' placeholder='Body' name='body' value={body}
+                <textarea id='body' className='form-control border border-primary-subtle mb-2' placeholder='Body' name='body' value={body}
                     onChange={onChange}></textarea>
             </div>
-            <div class='form-check mb-4'>
-                <input id='completed' class='form-check-input border border-primary-subtle cursor-pointer' type='checkbox' name='completed' checked={completed}
+            <div className='form-check mb-4'>
+                <input id='completed' className='form-check-input border border-primary-subtle cursor-pointer' type='checkbox' name='completed' checked={completed}
                         onChange={onChange} />
-                <label for='completed' class='form-check-label cursor-pointer'>Completed</label>
+                <label htmlFor='completed' className='form-check-label cursor-pointer'>Completed</label>
             </div>
-            <div class='btn-group w-100'>
-                <button class='btn btn-outline-primary' type='submit'
+            <div className='btn-group w-100'>
+                <button className='btn btn-outline-primary' type='submit'
                     disabled={(
                         isLoading === true
                         ||isLoadingRefresh === true
@@ -97,7 +97,7 @@ const EditTaskForm = ({data}) => {
                 >
                     Edit
                 </button>
-                <button class='btn btn-outline-secondary' type='button'
+                <button className='btn btn-outline-secondary' type='button'
                     onClick={()=>onClickCancel(taskId)}
                     disabled={(
                         isLoading === true

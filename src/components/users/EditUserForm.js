@@ -102,41 +102,41 @@ const EditUserForm = ({data}) => {
     }
     return (
         <form id = 'editUser' onSubmit={handleSubmit}>
-            {(message.length>0)?<div class='text-warning'>{message}</div>:''}
+            {(message.length>0)?<div className='text-warning'>{message}</div>:''}
             <div>
-                <label for='username' class='form-label cursor-pointer'
+                <label htmlFor='username' className='form-label cursor-pointer'
                 >Username:</label>
                 <input id='username' type='text' name='username'
                     value={username} onChange={onChange} 
-                    class='form-control border border-primary-subtle mb-2' />
+                    className='form-control border border-primary-subtle mb-2' />
             </div>
             <div>
-                <span class='form-text text-danger'>Leave password empty if you will not change
+                <span className='form-text text-danger'>Leave password empty if you will not change
                     password
                 </span>
             </div>
             <div>
-                <label for='password' class='form-label cursor-pointer'>Password:</label>
+                <label htmlFor='password' className='form-label cursor-pointer'>Password:</label>
                 <input id='password' type='password' name='password'
                     value={password} onChange={onChange}
-                    class='form-control border border-primary-subtle mb-2'
+                    className='form-control border border-primary-subtle mb-2'
                 />
             </div>
             <div>
-                <label for='retypePassword' class='form-label cursor-pointer'>Retype Password:</label>
+                <label htmlFor='retypePassword' className='form-label cursor-pointer'>Retype Password:</label>
                 <input id='retypePassword' type='password' name='retypePassword'
                     value={retypePassword} onChange={onChange}
-                    class='form-control border border-primary-subtle mb-4'
+                    className='form-control border border-primary-subtle mb-4'
                 />
             </div>
-            <div class='btn-group w-100'>
+            <div className='btn-group w-100'>
                 <button type='submit'
                     disabled={(
                         isLoading === true
                         ||isLoadingRefresh === true
                         ||isLoadingCheckUser === true
                     )}
-                    class='btn btn-outline-primary'
+                    className='btn btn-outline-primary'
                 >
                     Edit User
                 </button>
@@ -147,7 +147,7 @@ const EditUserForm = ({data}) => {
                         ||isLoadingRefresh === true
                         ||isLoadingCheckUser === true
                     )}
-                    class='btn btn-outline-secondary'
+                    className='btn btn-outline-secondary'
                 >
                     Cancel
                 </button>

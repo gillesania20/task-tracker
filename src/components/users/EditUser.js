@@ -13,8 +13,8 @@ const EditUser = () => {
     }else if(typeof error?.data?.message !== 'undefined'){
         content = <ErrorWithMessage message={error.data.message} />;
     }else if(typeof data !== 'undefined'){
-        content = <div id='editUser' class='shadow-lg py-5 px-3 rounded'>
-            <h1 class='text-center mb-5'>Edit user</h1>
+        content = <div id='editUser' className='shadow-lg py-5 px-3 rounded'>
+            <h1 className='text-center mb-5'>Edit user</h1>
             <EditUserForm data={data} />
         </div>;
     }else{

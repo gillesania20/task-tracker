@@ -1,7 +1,7 @@
 import ClipLoader from 'react-spinners/ClipLoader';
 const Loader = () => {
     return (
-        <div class='d-flex justify-content-center vh-100 align-items-center'>
+        <div className='d-flex justify-content-center vh-100 align-items-center'>
             <ClipLoader />
         </div>
     );

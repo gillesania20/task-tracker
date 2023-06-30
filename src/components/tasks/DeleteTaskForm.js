@@ -36,13 +36,13 @@ const DeleteTaskForm = () => {
     }
     let content = (
         <form id='deleteTask' onSubmit={handleSubmit}>
-            {(message.length>0)?<div class='text-warning'>{message}</div>:''}
-            <div class='row pb-4'>
-                <span class='col'>Task Id:</span>
-                <span class='col'>{taskId}</span>
+            {(message.length>0)?<div className='text-warning'>{message}</div>:''}
+            <div className='row pb-4'>
+                <span className='col'>Task Id:</span>
+                <span className='col'>{taskId}</span>
             </div>
-            <div class='btn-group w-100'>
-                <button class='btn btn-outline-danger' type='submit'
+            <div className='btn-group w-100'>
+                <button className='btn btn-outline-danger' type='submit'
                     disabled={(
                         isLoading === true
                         ||isLoadingRefresh === true
@@ -50,7 +50,7 @@ const DeleteTaskForm = () => {
                 >
                     Delete
                 </button>
-                <button class='btn btn-outline-secondary' type='button'
+                <button className='btn btn-outline-secondary' type='button'
                     disabled={(
                         isLoading === true
                         ||isLoadingRefresh === true

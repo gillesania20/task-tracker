@@ -49,33 +49,33 @@ const RegisterForm = () => {
     }
     return (
         <form id = 'registerForm' onSubmit={handleSubmit}>
-            {(message.length > 0)?<div class='text-warning'>{message}</div>:''}
+            {(message.length > 0)?<div className='text-warning'>{message}</div>:''}
             <div>
-                <label for='uname' class='form-label cursor-pointer'>Username:</label>
+                <label htmlFor='uname' className='form-label cursor-pointer'>Username:</label>
                 <input type='text' id='uname' placeholder = 'Username' name='uname'
                     value={username} onChange={handleOnChange}
-                    class='form-control'
+                    className='form-control'
                 />
             </div>
             <div>
-                <label for='pass' class='form-label cursor-pointer'>Password:</label>
+                <label htmlFor='pass' className='form-label cursor-pointer'>Password:</label>
                 <input type='password' id='pass' placeholder='Password' name='pass'
                     value={password} onChange={handleOnChange}
-                    class='form-control'
+                    className='form-control'
                 />
             </div>
             <div>
-                <label for='confirmPass' class='form-label cursor-pointer'>Confirm password:</label>
+                <label htmlFor='confirmPass' className='form-label cursor-pointer'>Confirm password:</label>
                 <input type='password' id='confirmPass' placeholder='Confirm password' name='confirmPass'
                     value={confirmPassword} onChange={handleOnChange}
-                    class='form-control mb-2'
+                    className='form-control mb-2'
                 />
             </div>
             <div>
-                <button type='submit' disabled={isLoading} class='btn btn-outline-primary w-100 mb-2'>
+                <button type='submit' disabled={isLoading} className='btn btn-outline-primary w-100 mb-2'>
                     Register
                 </button>
-                <button type='button' onClick={onClickCancel} class='btn btn-outline-light w-100'>
+                <button type='button' onClick={onClickCancel} className='btn btn-outline-light w-100'>
                     Cancel
                 </button>
             </div>

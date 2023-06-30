@@ -21,37 +21,37 @@ const DisplaySingleTask = () => {
     }else if(typeof error?.data?.message !== 'undefined'){
         content = <ErrorWithMessage message={error.data.message} />;
     }else if(typeof data !== 'undefined'){
-        content = <div id = 'displaySingleTask' class='shadow-lg py-5 px-3 rounded'>
-            <h1 class='text-center mb-5'>Display task</h1>
-            <div class=''>
-                <div class='row pb-3'>
-                    <span class='col'>Title:</span>
-                    <span class='col'>{data.title}</span>
+        content = <div id = 'displaySingleTask' className='shadow-lg py-5 px-3 rounded'>
+            <h1 className='text-center mb-5'>Display task</h1>
+            <div className=''>
+                <div className='row pb-3'>
+                    <span className='col'>Title:</span>
+                    <span className='col'>{data.title}</span>
                 </div>
-                <div class='row pb-3'>
-                    <span class='col'>Body:</span>
-                    <span class='col'>{data.body}</span>
+                <div className='row pb-3'>
+                    <span className='col'>Body:</span>
+                    <span className='col'>{data.body}</span>
                 </div>
-                <div class='row pb-3'>
-                    <span class='col'>Status:</span>
-                    <span class='col'>{(data.completed)?'Completed':'Not Completed'}</span>
+                <div className='row pb-3'>
+                    <span className='col'>Status:</span>
+                    <span className='col'>{(data.completed)?'Completed':'Not Completed'}</span>
                 </div>
                 {
                     (data.completed === true)?
-                    <div class='row pb-3'>
-                        <span class='col'>Completed At:</span>
-                        <span class='col'>{data.completedAt}</span>
+                    <div className='row pb-3'>
+                        <span className='col'>Completed At:</span>
+                        <span className='col'>{data.completedAt}</span>
                     </div>
                     :''
                 }
-                <div class='row pb-4'>
-                    <span class='col'>Author:</span>
-                    <span class='col'>{data.user.username}</span>
+                <div className='row pb-4'>
+                    <span className='col'>Author:</span>
+                    <span className='col'>{data.user.username}</span>
                 </div>
-                <div class='row'>
-                    <div class='btn-group'>
-                        <button class='btn btn-outline-primary' onClick={()=>onClickEdit(taskId)}>Edit</button>
-                        <button class='btn btn-outline-danger' onClick={()=>onClickDelete(taskId)}>Delete</button>
+                <div className='row'>
+                    <div className='btn-group'>
+                        <button className='btn btn-outline-primary' onClick={()=>onClickEdit(taskId)}>Edit</button>
+                        <button className='btn btn-outline-danger' onClick={()=>onClickDelete(taskId)}>Delete</button>
                     </div>
                 </div>
             </div>

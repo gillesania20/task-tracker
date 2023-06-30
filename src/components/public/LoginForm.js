@@ -37,29 +37,29 @@ const LoginForm = () => {
     }
     return (
         <form id = 'loginForm' onSubmit={handleSubmit}>
-            {(message.length > 0)?<div class='text-warning'>{message}</div>:''}
+            {(message.length > 0)?<div className='text-warning'>{message}</div>:''}
             <div>
-                <label for='uname' class='form-label cursor-pointer'>Username:</label>
+                <label htmlFor='uname' className='form-label cursor-pointer'>Username:</label>
                 <input type='text' id='uname' name='uname' value={username}
-                    onChange={handleOnChange} class='form-control'
+                    onChange={handleOnChange} className='form-control'
                     placeholder='Username'
                 />
             </div>
             <div>
-                <label for='pass' class='form-label cursor-pointer'>Password:</label>
+                <label htmlFor='pass' className='form-label cursor-pointer'>Password:</label>
                 <input type='password' id='pass' name='pass' value={password}
-                    onChange={handleOnChange} class='form-control mb-2'
+                    onChange={handleOnChange} className='form-control mb-2'
                     placeholder='Password'
                 />
             </div>
             <div>
                 <button type='submit' disabled={isLoading}
-                    class='btn btn-outline-primary w-100 mb-1'>
+                    className='btn btn-outline-primary w-100 mb-1'>
                     Login
                 </button>
             </div>
-            <div class='text-center'>
-                <Link to='/register' class='text-decoration-none
+            <div className='text-center'>
+                <Link to='/register' className='text-decoration-none
                     text-primary'>Register</Link>
             </div>
         </form>

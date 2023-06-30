@@ -39,27 +39,26 @@ const AddNewTaskForm = () => {
         return null;
     }
     return (
-        <form id = 'addNewTaskForm' onSubmit={handleSubmit}
-            class=''>
-            {(message.length > 0)?<div class='text-warning'>{message}</div>:''}
+        <form id = 'addNewTaskForm' onSubmit={handleSubmit}>
+            {(message.length > 0)?<div className='text-warning'>{message}</div>:''}
             <div>
-                <label for='title' class='form-label cursor-pointer'>Title:</label>
+                <label htmlFor='title' className='form-label cursor-pointer'>Title:</label>
                 <input type='text' id='title' placeholder='Title'
                     name='title' value={title} onChange={onChange}
-                    class='form-control border border-primary-subtle mb-2' />
+                    className='form-control border border-primary-subtle mb-2' />
             </div>
             <div>
-                <label for='body' class='form-label cursor-pointer'>Body:</label>
+                <label htmlFor='body' className='form-label cursor-pointer'>Body:</label>
                 <textarea placeholder='Body' name='body'
                     value={body} onChange={onChange}
-                    class='form-control border border-primary-subtle mb-4' rows='5'></textarea>
+                    className='form-control border border-primary-subtle mb-4' rows='5'></textarea>
             </div>
-            <div class='text-center'>
+            <div className='text-center'>
                 <button type='submit'
                     disabled={(isLoading === true
                         || isLoadingRefresh === true
                     )}
-                    class='btn btn-outline-primary'
+                    className='btn btn-outline-primary'
                 >
                     Add Task
                 </button>

@@ -49,18 +49,18 @@ const DeleteUserForm = () => {
         return null;
     }
     const content = <form id='deleteUser' onSubmit={handleSubmit}>
-        {(message.length>0)?<div class='text-warning'>{message}</div>:''}
-        <div class='row pb-4'>
-            <span class='col'>UserId:</span>
-            <span class='col'>{userId}</span>
+        {(message.length>0)?<div className='text-warning'>{message}</div>:''}
+        <div className='row pb-4'>
+            <span className='col'>UserId:</span>
+            <span className='col'>{userId}</span>
         </div>
-        <div class='btn-group w-100'>
+        <div className='btn-group w-100'>
             <button type='submit'
                 disabled={(
                     isLoading === true
                     ||isLoadingRefresh === true
                 )}
-                class='btn btn-outline-danger'
+                className='btn btn-outline-danger'
             >
                 Delete
             </button>
@@ -70,7 +70,7 @@ const DeleteUserForm = () => {
                     isLoading === true
                     ||isLoadingRefresh === true
                 )}
-                class='btn btn-outline-secondary'
+                className='btn btn-outline-secondary'
             >
                 Cancel
             </button>
