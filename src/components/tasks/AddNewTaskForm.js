@@ -49,7 +49,7 @@ const AddNewTaskForm = () => {
             </div>
             <div>
                 <label htmlFor='body' className='form-label cursor-pointer'>Body:</label>
-                <textarea placeholder='Body' name='body'
+                <textarea id='body' placeholder='Body' name='body'
                     value={body} onChange={onChange}
                     className='form-control border border-primary-subtle mb-4' rows='5'></textarea>
             </div>

@@ -55,7 +55,7 @@ const Header = () => {
                             {
                                 (role === 'Admin')?
                                 <li className='nav-item'>
-                                    <Link className='nav-link' to='/dash/users/display-all-users'>
+                                    <Link className='nav-link text-center py-4 py-md-0' to='/dash/users/display-all-users'>
                                         Show Users
                                     </Link>
                                 </li>
