@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3500/api';
+const BASE_URL = 'https://taskTracker-api.onrender.com/api';
 
 export {
     BASE_URL
