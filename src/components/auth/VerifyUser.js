@@ -8,10 +8,10 @@ const VerifyUser = () => {
     const flagRef = useRef(true);
     let content = <></>;
     useEffect(()=>{
-        if(flagRef.current === true){
+        //if(flagRef.current === true){
             refresh();
-            flagRef.current = false;
-        }
+            //flagRef.current = false;
+        //}
     }, [refresh]);
     if(isLoading === true){
         content = <Loader />;
