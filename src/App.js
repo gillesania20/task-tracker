@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout';
 import VerifyUser from './components/auth/VerifyUser';
 import Authorization from './components/auth/Authorization';
 import Layout from './components/layout/Layout';
@@ -20,6 +21,7 @@ import DefaultError from './components/errors/DefaultError';
 function App() {
   const router = createBrowserRouter([
     {
+      element: <AppLayout />,
       errorElement: <DefaultError />,
       children: [
         {
@@ -93,10 +95,14 @@ function App() {
               ]
             }
           ]
+        },
+        {
+          path: '*',
+          element: <DefaultError />
         }
       ]
     }
-  ])
+  ]);
   return (
     <div className="App">
       <RouterProvider router={router} />
